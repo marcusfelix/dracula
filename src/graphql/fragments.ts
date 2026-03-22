@@ -28,7 +28,6 @@ export const VARIANT_FRAGMENT = `
     title
     sku
     availableForSale
-    quantityAvailable
     price { ...MoneyFields }
     compareAtPrice { ...MoneyFields }
     image { ...ImageFields }

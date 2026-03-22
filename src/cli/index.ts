@@ -118,7 +118,7 @@ const SIPHON_PRODUCTS_QUERY = `
           variants(first: 250) {
             edges {
               node {
-                id title sku availableForSale quantityAvailable
+                id title sku availableForSale
                 price { amount currencyCode }
                 compareAtPrice { amount currencyCode }
                 image { id url altText width height }

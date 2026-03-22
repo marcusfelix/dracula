@@ -34,7 +34,6 @@
           "title": "Default",
           "sku": "TV-DEF",
           "availableForSale": true,
-          "quantityAvailable": 30,
           "price": { "amount": "59.00", "currencyCode": "USD" },
           "compareAtPrice": { "amount": "79.00", "currencyCode": "USD" },
           "image": null,

@@ -31,7 +31,6 @@
           "title": "Default",
           "sku": "SWB-DEF",
           "availableForSale": true,
-          "quantityAvailable": 100,
           "price": { "amount": "29.00", "currencyCode": "USD" },
           "compareAtPrice": null,
           "image": null,
