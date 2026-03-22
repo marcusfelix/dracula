@@ -4,7 +4,9 @@ import {
   writeFileSync,
   existsSync,
   readFileSync,
+  rmSync,
 } from "node:fs";
+import { createInterface } from "node:readline";
 
 const API_VERSION = "2025-04";
 
@@ -544,6 +546,65 @@ async function status(): Promise<void> {
   console.log(`  Shop:        ${existsSync(join(baseDir, "shop.json")) ? "yes" : "no"}`);
 }
 
+// ─── Reset Command ──────────────────────────────────────────────────────────
+
+function confirm(question: string): Promise<boolean> {
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+  return new Promise((resolve) => {
+    rl.question(question, (answer) => {
+      rl.close();
+      resolve(answer.toLowerCase() === "y");
+    });
+  });
+}
+
+async function resetCart(): Promise<void> {
+  const config = await loadConfig();
+  const baseDir = resolve(config.localDataDir ?? ".dracula/blood-bank");
+  const cartPath = join(baseDir, "cart.json");
+
+  if (!existsSync(cartPath)) {
+    console.log("[Dracula] No cart.json found. Nothing to reset.");
+    return;
+  }
+
+  rmSync(cartPath);
+  console.log("[Dracula] Cart reset. cart.json cleared.");
+}
+
+async function resetAll(): Promise<void> {
+  const config = await loadConfig();
+  const baseDir = resolve(config.localDataDir ?? ".dracula/blood-bank");
+
+  if (!existsSync(baseDir)) {
+    console.log("[Dracula] No blood-bank directory found. Nothing to reset.");
+    return;
+  }
+
+  const proceed = await confirm(
+    "This will delete all local snapshot data. Run `dracula siphon` to repopulate. Continue? (y/N) "
+  );
+
+  if (!proceed) {
+    console.log("[Dracula] Reset cancelled.");
+    return;
+  }
+
+  rmSync(baseDir, { recursive: true });
+  console.log("[Dracula] Blood bank reset. Run `npx dracula siphon` to repopulate.");
+}
+
+async function reset(): Promise<void> {
+  const subcommand = process.argv[3];
+
+  switch (subcommand) {
+    case "cart":
+      return resetCart();
+    default:
+      return resetAll();
+  }
+}
+
 // ─── CLI Entry ───────────────────────────────────────────────────────────────
 
 const command = process.argv[2];
@@ -561,16 +622,25 @@ switch (command) {
       process.exit(1);
     });
     break;
+  case "reset":
+    reset().catch((err) => {
+      console.error(`\n[Dracula] Error: ${err.message}`);
+      process.exit(1);
+    });
+    break;
   default:
     console.log(`
 Dracula SDK CLI
 
 Commands:
-  dracula siphon   Download store data to local blood-bank
-  dracula status   Show blood-bank status and record counts
+  dracula siphon       Download store data to local blood-bank
+  dracula status       Show blood-bank status and record counts
+  dracula reset        Delete all blood-bank data (with confirmation)
+  dracula reset cart   Clear cart.json only
 
 Usage:
   npx dracula siphon
   npx dracula status
+  npx dracula reset cart
 `);
 }
