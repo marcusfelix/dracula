@@ -163,6 +163,7 @@ export class LocalProvider implements DraculaProvider {
     this.strict = config.localProvider?.strictMode ?? false;
 
     this.loadData();
+    this.logCartState();
     this.checkSnapshotAge(config);
 
     this.products = this.createProductsNamespace();
@@ -174,6 +175,23 @@ export class LocalProvider implements DraculaProvider {
     this.search = this.createSearchNamespace();
   }
 
+  private logCartState(): void {
+    const cartPath = this.getCartPath();
+    if (!existsSync(cartPath)) return;
+
+    const data = this.readJson<Record<string, { lines?: { edges?: unknown[] } }>>(cartPath);
+    if (!data) return;
+
+    const carts = Object.values(data);
+    const totalLines = carts.reduce(
+      (sum, cart) => sum + (cart.lines?.edges?.length ?? 0),
+      0
+    );
+
+    if (totalLines > 0) {
+      console.log(
+        `[Dracula] Cart loaded: ${totalLines} line item${totalLines === 1 ? "" : "s"}. ` +
+        `Run \`npx dracula reset cart\` to clear.`
   private checkSnapshotAge(config: DraculaConfig): void {
     const maxAgeDays = config.localProvider?.maxSnapshotAge ?? 7;
     if (maxAgeDays === 0) return;
