@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import type { DraculaConfig } from "../config.js";
 import {
@@ -163,6 +163,7 @@ export class LocalProvider implements DraculaProvider {
     this.strict = config.localProvider?.strictMode ?? false;
 
     this.loadData();
+    this.checkSnapshotAge(config);
 
     this.products = this.createProductsNamespace();
     this.collections = this.createCollectionsNamespace();
@@ -171,6 +172,24 @@ export class LocalProvider implements DraculaProvider {
     this.metaobjects = this.createMetaobjectsNamespace();
     this.seo = this.createSEONamespace();
     this.search = this.createSearchNamespace();
+  }
+
+  private checkSnapshotAge(config: DraculaConfig): void {
+    const maxAgeDays = config.localProvider?.maxSnapshotAge ?? 7;
+    if (maxAgeDays === 0) return;
+
+    const shopPath = join(this.dataDir, "shop.json");
+    if (!existsSync(shopPath)) return;
+
+    const mtime = statSync(shopPath).mtime;
+    const ageDays = Math.floor((Date.now() - mtime.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (ageDays >= maxAgeDays) {
+      console.warn(
+        `[Dracula] Warning: blood-bank snapshot is ${ageDays} day${ageDays === 1 ? "" : "s"} old. ` +
+        `Run \`npx dracula siphon\` to refresh.`
+      );
+    }
   }
 
   private async maybeDelay(): Promise<void> {
