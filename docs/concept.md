@@ -730,6 +730,33 @@ exposes a typed method API. This is deliberate: the abstraction boundary has to
 hold at the type level, and a passthrough GraphQL interface would make
 `LocalProvider` impossible to implement reliably.
 
+### Why we don't accept raw GraphQL queries
+
+The method API (`client.products.list()`, `client.cart.addLines()`, etc.) is the
+abstraction layer that makes the dual-provider model possible. If we accepted raw
+GraphQL strings in the client — for example, a `client.query(gql`...`)` escape
+hatch — we would face an impossible choice:
+
+1. **Abandon the LocalProvider.** Raw GraphQL cannot be executed against a JSON
+   file store without a full GraphQL execution engine. We would have to fall back
+   to live API calls in development, which eliminates the core value proposition
+   of zero-latency, offline-capable local development.
+
+2. **Build a full GraphQL execution engine.** This is a multi-year effort that
+   would turn Dracula into a GraphQL server, not a data abstraction layer. It
+   would require implementing the entire Shopify Storefront API schema, including
+   connection patterns, filtering, and all field resolvers. That is not what this
+   project is.
+
+Neither option is acceptable. The method API *is* the contract. Adding a raw
+query escape hatch would make both providers harder to maintain and would
+encourage developers to bypass the abstraction entirely, eroding the guarantees
+Dracula provides.
+
+**If a Shopify API field is missing from the method surface, the right fix is to
+add it to the relevant method — not to expose raw GraphQL.** This keeps the
+LocalProvider viable and the type-level parity guarantee intact.
+
 **Dracula does not mock the Admin API.** The Storefront API is the correct
 scope. Admin API interactions (inventory management, order creation,
 fulfillment) carry real business consequences and are outside the UI development
