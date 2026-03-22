@@ -301,13 +301,13 @@ export const SHOP_QUERY = `
       description
       primaryDomain { url host }
       brand {
-        logo { ...ImageFields }
-        squareLogo { ...ImageFields }
+        logo { image { ...ImageFields } }
+        squareLogo { image { ...ImageFields } }
         colors {
           primary { background foreground }
           secondary { background foreground }
         }
-        coverImage { ...ImageFields }
+        coverImage { image { ...ImageFields } }
       }
       paymentSettings {
         currencyCode

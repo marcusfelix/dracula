@@ -283,13 +283,13 @@ export interface ShopifyShop {
     host: string;
   };
   brand: {
-    logo: ShopifyImage | null;
-    squareLogo: ShopifyImage | null;
+    logo: { image: ShopifyImage | null } | null;
+    squareLogo: { image: ShopifyImage | null } | null;
     colors: {
       primary: { background: string; foreground: string }[];
       secondary: { background: string; foreground: string }[];
     };
-    coverImage: ShopifyImage | null;
+    coverImage: { image: ShopifyImage | null } | null;
   } | null;
   paymentSettings: {
     currencyCode: string;

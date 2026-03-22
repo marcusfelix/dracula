@@ -225,10 +225,10 @@ const SIPHON_SHOP_QUERY = `
       id name description
       primaryDomain { url host }
       brand {
-        logo { id url altText width height }
-        squareLogo { id url altText width height }
+        logo { image { id url altText width height } }
+        squareLogo { image { id url altText width height } }
         colors { primary { background foreground } secondary { background foreground } }
-        coverImage { id url altText width height }
+        coverImage { image { id url altText width height } }
       }
       paymentSettings {
         currencyCode acceptedCardBrands enabledPresentmentCurrencies

@@ -6,7 +6,12 @@
       "Bash(npx vitest:*)",
       "Bash(npx tsc:*)",
       "Read(//Users/marcusfelix/Projects/bliss/**)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npm run:*)",
+      "Bash(npm test:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }
