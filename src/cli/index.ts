@@ -280,6 +280,18 @@ function writeIndex(
 
 // ─── Config Loader ───────────────────────────────────────────────────────────
 
+// Candidate files where a DraculaClient instance is likely exported
+const CLIENT_CANDIDATES = [
+  "lib/dracula.ts",
+  "lib/dracula.js",
+  "utils/dracula.ts",
+  "utils/dracula.js",
+  "src/lib/dracula.ts",
+  "src/lib/dracula.js",
+  "dracula.config.ts",
+  "dracula.config.js",
+];
+
 function loadEnvFile(filePath: string): void {
   if (!existsSync(filePath)) return;
   const contents = readFileSync(filePath, "utf-8");
@@ -295,30 +307,34 @@ function loadEnvFile(filePath: string): void {
 }
 
 async function loadConfig(): Promise<SiphonConfig> {
-  // Load .env files so env vars are available inside dracula.config.ts
   loadEnvFile(resolve(".env.local"));
   loadEnvFile(resolve(".env"));
 
-  const configPath = resolve("dracula.config.ts");
-  const configPathJs = resolve("dracula.config.js");
+  const { createJiti } = await import("jiti");
+  const jiti = createJiti(import.meta.url);
 
-  if (existsSync(configPath) || existsSync(configPathJs)) {
-    const configFile = existsSync(configPath) ? configPath : configPathJs;
-    const { createJiti } = await import("jiti");
-    const jiti = createJiti(import.meta.url);
-    const mod = await jiti.import(configFile);
-    return (mod as { default: SiphonConfig }).default;
-  }
+  for (const candidate of CLIENT_CANDIDATES) {
+    const filePath = resolve(candidate);
+    if (!existsSync(filePath)) continue;
 
-  // Fallback to env vars
-  const shop = process.env.SHOPIFY_STORE_DOMAIN;
-  const token = process.env.SHOPIFY_STOREFRONT_TOKEN;
-  if (shop && token) {
-    return { shop, storefrontAccessToken: token };
+    const mod = await jiti.import(filePath) as Record<string, unknown>;
+
+    // Look for a DraculaClient instance in any named export or default
+    const exports = Object.values(mod);
+    for (const value of exports) {
+      if (value && typeof value === "object" && "config" in value) {
+        return (value as { config: SiphonConfig }).config;
+      }
+    }
+
+    // Also handle defineConfig default export (dracula.config.ts style)
+    if (mod.default && typeof mod.default === "object" && "shop" in mod.default) {
+      return mod.default as SiphonConfig;
+    }
   }
 
   throw new Error(
-    "No dracula.config.ts found. Create one or set SHOPIFY_STORE_DOMAIN and SHOPIFY_STOREFRONT_TOKEN env vars."
+    "No DraculaClient found. Create lib/dracula.ts with a DraculaClient export, or add a dracula.config.ts."
   );
 }
 

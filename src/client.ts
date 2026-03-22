@@ -23,8 +23,10 @@ export class DraculaClient implements DraculaProvider {
 
   private readonly provider: DraculaProvider;
   public readonly mode: "local" | "remote";
+  public readonly config: DraculaConfig;
 
   constructor(config: DraculaConfig) {
+    this.config = config;
     const isDev = process.env.NODE_ENV === "development";
 
     if (isDev) {
