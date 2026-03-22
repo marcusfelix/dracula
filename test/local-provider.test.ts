@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeAll, beforeEach } from "vitest";
+import { describe, it, expect, beforeAll, beforeEach, vi } from "vitest";
 import { resolve } from "node:path";
-import { existsSync, rmSync } from "node:fs";
+import { existsSync, rmSync, utimesSync } from "node:fs";
 import { LocalProvider } from "../src/providers/local.js";
 import { DraculaNotFoundError, DraculaValidationError } from "../src/errors.js";
 import type { DraculaConfig } from "../src/config.js";
@@ -463,6 +463,51 @@ describe("LocalProvider", () => {
       await slowProvider.products.list();
       const elapsed = Date.now() - start;
       expect(elapsed).toBeGreaterThanOrEqual(40); // Allow 10ms tolerance
+    });
+  });
+
+  // ─── Stale Snapshot Warning ───────────────────────────────────────────
+
+  describe("stale snapshot warning", () => {
+    it("warns when snapshot is older than maxSnapshotAge", () => {
+      const shopPath = resolve(FIXTURES_DIR, "shop.json");
+      const originalStat = require("node:fs").statSync(shopPath);
+
+      // Set mtime to 10 days ago
+      const tenDaysAgo = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000);
+      utimesSync(shopPath, tenDaysAgo, tenDaysAgo);
+
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      createProvider({ localProvider: { maxSnapshotAge: 7 } });
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("blood-bank snapshot is 10 day")
+      );
+      warnSpy.mockRestore();
+
+      // Restore original mtime
+      utimesSync(shopPath, originalStat.atime, originalStat.mtime);
+    });
+
+    it("does not warn when snapshot is fresh", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      createProvider({ localProvider: { maxSnapshotAge: 7 } });
+      expect(warnSpy).not.toHaveBeenCalled();
+      warnSpy.mockRestore();
+    });
+
+    it("does not warn when maxSnapshotAge is 0", () => {
+      const shopPath = resolve(FIXTURES_DIR, "shop.json");
+      const originalStat = require("node:fs").statSync(shopPath);
+
+      const tenDaysAgo = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000);
+      utimesSync(shopPath, tenDaysAgo, tenDaysAgo);
+
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      createProvider({ localProvider: { maxSnapshotAge: 0 } });
+      expect(warnSpy).not.toHaveBeenCalled();
+      warnSpy.mockRestore();
+
+      utimesSync(shopPath, originalStat.atime, originalStat.mtime);
     });
   });
 });
