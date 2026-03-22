@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, beforeEach } from "vitest";
+import { describe, it, expect, beforeAll, beforeEach, vi } from "vitest";
 import { resolve } from "node:path";
 import { existsSync, rmSync } from "node:fs";
 import { LocalProvider } from "../src/providers/local.js";
@@ -106,6 +106,15 @@ describe("LocalProvider", () => {
       const result = await provider.products.list({ query: "backpack" });
       expect(result.edges).toHaveLength(1);
       expect(result.edges[0].node.handle).toBe("nomad-backpack");
+    });
+
+    it("warns when structured filter syntax is used", async () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      await provider.products.list({ query: "product_type:Backpack" });
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("does not support structured Shopify filter syntax")
+      );
+      warnSpy.mockRestore();
     });
 
     it("returns product recommendations by shared tags", async () => {
