@@ -6,7 +6,11 @@
   "descriptionHtml": "<p>Lightweight hiking vest</p>",
   "productType": "Apparel",
   "vendor": "TrailCo",
-  "tags": ["outdoor", "hiking", "vest"],
+  "tags": [
+    "outdoor",
+    "hiking",
+    "vest"
+  ],
   "availableForSale": true,
   "createdAt": "2024-03-01T00:00:00Z",
   "updatedAt": "2024-07-01T00:00:00Z",
@@ -14,17 +18,34 @@
   "isGiftCard": false,
   "totalInventory": 30,
   "priceRange": {
-    "minVariantPrice": { "amount": "59.00", "currencyCode": "USD" },
-    "maxVariantPrice": { "amount": "59.00", "currencyCode": "USD" }
+    "minVariantPrice": {
+      "amount": "59.00",
+      "currencyCode": "USD"
+    },
+    "maxVariantPrice": {
+      "amount": "59.00",
+      "currencyCode": "USD"
+    }
   },
   "compareAtPriceRange": {
-    "minVariantPrice": { "amount": "79.00", "currencyCode": "USD" },
-    "maxVariantPrice": { "amount": "79.00", "currencyCode": "USD" }
+    "minVariantPrice": {
+      "amount": "79.00",
+      "currencyCode": "USD"
+    },
+    "maxVariantPrice": {
+      "amount": "79.00",
+      "currencyCode": "USD"
+    }
   },
   "featuredImage": null,
   "images": {
     "edges": [],
-    "pageInfo": { "hasNextPage": false, "hasPreviousPage": false, "startCursor": null, "endCursor": null }
+    "pageInfo": {
+      "hasNextPage": false,
+      "hasPreviousPage": false,
+      "startCursor": null,
+      "endCursor": null
+    }
   },
   "variants": {
     "edges": [
@@ -34,24 +55,53 @@
           "title": "Default",
           "sku": "TV-DEF",
           "availableForSale": true,
-          "price": { "amount": "59.00", "currencyCode": "USD" },
-          "compareAtPrice": { "amount": "79.00", "currencyCode": "USD" },
+          "price": {
+            "amount": "59.00",
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": "79.00",
+            "currencyCode": "USD"
+          },
           "image": null,
-          "selectedOptions": [{ "name": "Title", "value": "Default Title" }],
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
           "requiresShipping": true,
           "weight": 0.3,
           "weightUnit": "KILOGRAMS",
           "barcode": null,
-          "currentlyNotInStock": false
+          "currentlyNotInStock": false,
+          "quantityAvailable": 30
         },
         "cursor": "v3"
       }
     ],
-    "pageInfo": { "hasNextPage": false, "hasPreviousPage": false, "startCursor": "v3", "endCursor": "v3" }
+    "pageInfo": {
+      "hasNextPage": false,
+      "hasPreviousPage": false,
+      "startCursor": "v3",
+      "endCursor": "v3"
+    }
   },
   "options": [
-    { "id": "opt3", "name": "Title", "optionValues": [{ "name": "Default Title", "swatch": null }] }
+    {
+      "id": "opt3",
+      "name": "Title",
+      "optionValues": [
+        {
+          "name": "Default Title",
+          "swatch": null
+        }
+      ]
+    }
   ],
   "metafields": [],
-  "seo": { "title": null, "description": null }
+  "seo": {
+    "title": null,
+    "description": null
+  }
 }

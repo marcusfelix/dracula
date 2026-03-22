@@ -6,7 +6,11 @@
   "descriptionHtml": "<p>A durable backpack for travel</p>",
   "productType": "Backpack",
   "vendor": "Nomad",
-  "tags": ["travel", "outdoor", "backpack"],
+  "tags": [
+    "travel",
+    "outdoor",
+    "backpack"
+  ],
   "availableForSale": true,
   "createdAt": "2024-01-01T00:00:00Z",
   "updatedAt": "2024-06-01T00:00:00Z",
@@ -14,12 +18,24 @@
   "isGiftCard": false,
   "totalInventory": 50,
   "priceRange": {
-    "minVariantPrice": { "amount": "99.00", "currencyCode": "USD" },
-    "maxVariantPrice": { "amount": "129.00", "currencyCode": "USD" }
+    "minVariantPrice": {
+      "amount": "99.00",
+      "currencyCode": "USD"
+    },
+    "maxVariantPrice": {
+      "amount": "129.00",
+      "currencyCode": "USD"
+    }
   },
   "compareAtPriceRange": {
-    "minVariantPrice": { "amount": "119.00", "currencyCode": "USD" },
-    "maxVariantPrice": { "amount": "149.00", "currencyCode": "USD" }
+    "minVariantPrice": {
+      "amount": "119.00",
+      "currencyCode": "USD"
+    },
+    "maxVariantPrice": {
+      "amount": "149.00",
+      "currencyCode": "USD"
+    }
   },
   "featuredImage": {
     "id": "gid://shopify/ProductImage/1",
@@ -41,7 +57,12 @@
         "cursor": "img1"
       }
     ],
-    "pageInfo": { "hasNextPage": false, "hasPreviousPage": false, "startCursor": "img1", "endCursor": "img1" }
+    "pageInfo": {
+      "hasNextPage": false,
+      "hasPreviousPage": false,
+      "startCursor": "img1",
+      "endCursor": "img1"
+    }
   },
   "variants": {
     "edges": [
@@ -51,18 +72,31 @@
           "title": "Green / Medium",
           "sku": "NB-GRN-M",
           "availableForSale": true,
-          "price": { "amount": "99.00", "currencyCode": "USD" },
-          "compareAtPrice": { "amount": "119.00", "currencyCode": "USD" },
+          "price": {
+            "amount": "99.00",
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": "119.00",
+            "currencyCode": "USD"
+          },
           "image": null,
           "selectedOptions": [
-            { "name": "Color", "value": "Green" },
-            { "name": "Size", "value": "Medium" }
+            {
+              "name": "Color",
+              "value": "Green"
+            },
+            {
+              "name": "Size",
+              "value": "Medium"
+            }
           ],
           "requiresShipping": true,
           "weight": 1.5,
           "weightUnit": "KILOGRAMS",
           "barcode": "123456789",
-          "currentlyNotInStock": false
+          "currentlyNotInStock": false,
+          "quantityAvailable": 25
         },
         "cursor": "v1"
       },
@@ -72,28 +106,75 @@
           "title": "Black / Large",
           "sku": "NB-BLK-L",
           "availableForSale": true,
-          "price": { "amount": "129.00", "currencyCode": "USD" },
-          "compareAtPrice": { "amount": "149.00", "currencyCode": "USD" },
+          "price": {
+            "amount": "129.00",
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": "149.00",
+            "currencyCode": "USD"
+          },
           "image": null,
           "selectedOptions": [
-            { "name": "Color", "value": "Black" },
-            { "name": "Size", "value": "Large" }
+            {
+              "name": "Color",
+              "value": "Black"
+            },
+            {
+              "name": "Size",
+              "value": "Large"
+            }
           ],
           "requiresShipping": true,
           "weight": 1.8,
           "weightUnit": "KILOGRAMS",
           "barcode": "987654321",
-          "currentlyNotInStock": false
+          "currentlyNotInStock": false,
+          "quantityAvailable": 25
         },
         "cursor": "v2"
       }
     ],
-    "pageInfo": { "hasNextPage": false, "hasPreviousPage": false, "startCursor": "v1", "endCursor": "v2" }
+    "pageInfo": {
+      "hasNextPage": false,
+      "hasPreviousPage": false,
+      "startCursor": "v1",
+      "endCursor": "v2"
+    }
   },
   "options": [
-    { "id": "opt1", "name": "Color", "optionValues": [{ "name": "Green", "swatch": null }, { "name": "Black", "swatch": null }] },
-    { "id": "opt2", "name": "Size", "optionValues": [{ "name": "Medium", "swatch": null }, { "name": "Large", "swatch": null }] }
+    {
+      "id": "opt1",
+      "name": "Color",
+      "optionValues": [
+        {
+          "name": "Green",
+          "swatch": null
+        },
+        {
+          "name": "Black",
+          "swatch": null
+        }
+      ]
+    },
+    {
+      "id": "opt2",
+      "name": "Size",
+      "optionValues": [
+        {
+          "name": "Medium",
+          "swatch": null
+        },
+        {
+          "name": "Large",
+          "swatch": null
+        }
+      ]
+    }
   ],
   "metafields": [],
-  "seo": { "title": "Nomad Backpack | Adventure Gear", "description": "The ultimate travel backpack" }
+  "seo": {
+    "title": "Nomad Backpack | Adventure Gear",
+    "description": "The ultimate travel backpack"
+  }
 }

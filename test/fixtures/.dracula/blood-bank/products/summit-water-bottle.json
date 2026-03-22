@@ -6,7 +6,11 @@
   "descriptionHtml": "<p>Insulated water bottle</p>",
   "productType": "Accessories",
   "vendor": "Nomad",
-  "tags": ["outdoor", "accessories", "water"],
+  "tags": [
+    "outdoor",
+    "accessories",
+    "water"
+  ],
   "availableForSale": true,
   "createdAt": "2024-02-15T00:00:00Z",
   "updatedAt": "2024-05-01T00:00:00Z",
@@ -14,15 +18,35 @@
   "isGiftCard": false,
   "totalInventory": 100,
   "priceRange": {
-    "minVariantPrice": { "amount": "29.00", "currencyCode": "USD" },
-    "maxVariantPrice": { "amount": "29.00", "currencyCode": "USD" }
+    "minVariantPrice": {
+      "amount": "29.00",
+      "currencyCode": "USD"
+    },
+    "maxVariantPrice": {
+      "amount": "29.00",
+      "currencyCode": "USD"
+    }
   },
   "compareAtPriceRange": {
-    "minVariantPrice": { "amount": "29.00", "currencyCode": "USD" },
-    "maxVariantPrice": { "amount": "29.00", "currencyCode": "USD" }
+    "minVariantPrice": {
+      "amount": "29.00",
+      "currencyCode": "USD"
+    },
+    "maxVariantPrice": {
+      "amount": "29.00",
+      "currencyCode": "USD"
+    }
   },
   "featuredImage": null,
-  "images": { "edges": [], "pageInfo": { "hasNextPage": false, "hasPreviousPage": false, "startCursor": null, "endCursor": null } },
+  "images": {
+    "edges": [],
+    "pageInfo": {
+      "hasNextPage": false,
+      "hasPreviousPage": false,
+      "startCursor": null,
+      "endCursor": null
+    }
+  },
   "variants": {
     "edges": [
       {
@@ -31,22 +55,50 @@
           "title": "Default",
           "sku": "SWB-DEF",
           "availableForSale": true,
-          "price": { "amount": "29.00", "currencyCode": "USD" },
+          "price": {
+            "amount": "29.00",
+            "currencyCode": "USD"
+          },
           "compareAtPrice": null,
           "image": null,
-          "selectedOptions": [{ "name": "Title", "value": "Default Title" }],
+          "selectedOptions": [
+            {
+              "name": "Title",
+              "value": "Default Title"
+            }
+          ],
           "requiresShipping": true,
           "weight": 0.5,
           "weightUnit": "KILOGRAMS",
           "barcode": null,
-          "currentlyNotInStock": false
+          "currentlyNotInStock": false,
+          "quantityAvailable": 100
         },
         "cursor": "v4"
       }
     ],
-    "pageInfo": { "hasNextPage": false, "hasPreviousPage": false, "startCursor": "v4", "endCursor": "v4" }
+    "pageInfo": {
+      "hasNextPage": false,
+      "hasPreviousPage": false,
+      "startCursor": "v4",
+      "endCursor": "v4"
+    }
   },
-  "options": [{ "id": "opt4", "name": "Title", "optionValues": [{ "name": "Default Title", "swatch": null }] }],
+  "options": [
+    {
+      "id": "opt4",
+      "name": "Title",
+      "optionValues": [
+        {
+          "name": "Default Title",
+          "swatch": null
+        }
+      ]
+    }
+  ],
   "metafields": [],
-  "seo": { "title": null, "description": null }
+  "seo": {
+    "title": null,
+    "description": null
+  }
 }
