@@ -1,0 +1,26 @@
+{
+  "id": "gid://shopify/Menu/1",
+  "handle": "main-menu",
+  "title": "Main Menu",
+  "itemsCount": 2,
+  "items": [
+    {
+      "id": "gid://shopify/MenuItem/1",
+      "title": "Shop",
+      "url": "/collections",
+      "type": "HTTP",
+      "resourceId": null,
+      "items": [],
+      "tags": []
+    },
+    {
+      "id": "gid://shopify/MenuItem/2",
+      "title": "About",
+      "url": "/pages/about-us",
+      "type": "PAGE",
+      "resourceId": "gid://shopify/Page/1",
+      "items": [],
+      "tags": []
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "gid://shopify/Collection/1",
+  "handle": "outdoor-gear",
+  "title": "Outdoor Gear",
+  "description": "Everything for your outdoor adventures",
+  "descriptionHtml": "<p>Everything for your outdoor adventures</p>",
+  "image": null,
+  "seo": { "title": "Outdoor Gear Collection", "description": "Shop outdoor gear" },
+  "updatedAt": "2024-06-01T00:00:00Z",
+  "products": {
+    "edges": [
+      { "node": { "id": "gid://shopify/Product/1" }, "cursor": "c1" },
+      { "node": { "id": "gid://shopify/Product/2" }, "cursor": "c2" },
+      { "node": { "id": "gid://shopify/Product/3" }, "cursor": "c3" }
+    ],
+    "pageInfo": { "hasNextPage": false, "hasPreviousPage": false, "startCursor": "c1", "endCursor": "c3" }
+  }
+}

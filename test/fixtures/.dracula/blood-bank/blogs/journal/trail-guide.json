@@ -1,0 +1,15 @@
+{
+  "id": "gid://shopify/Article/1",
+  "handle": "trail-guide",
+  "title": "Trail Guide: Pacific Crest",
+  "content": "A complete guide to hiking the PCT.",
+  "contentHtml": "<p>A complete guide to hiking the PCT.</p>",
+  "excerpt": "Hiking the PCT",
+  "excerptHtml": "<p>Hiking the PCT</p>",
+  "image": null,
+  "author": { "name": "Jane Doe" },
+  "publishedAt": "2024-04-01T00:00:00Z",
+  "tags": ["hiking", "guides"],
+  "seo": { "title": "Trail Guide", "description": "PCT guide" },
+  "blog": { "id": "gid://shopify/Blog/1", "handle": "journal", "title": "Journal" }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "gid://shopify/Metaobject/1",
+  "handle": "returns-policy",
+  "type": "faq_item",
+  "fields": [
+    { "key": "question", "value": "What is your return policy?", "type": "single_line_text_field", "reference": null },
+    { "key": "answer", "value": "30 day returns on all items.", "type": "multi_line_text_field", "reference": null }
+  ],
+  "updatedAt": "2024-05-01T00:00:00Z"
+}

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npx tsup:*)",
+      "Bash(npx vitest:*)",
+      "Bash(npx tsc:*)",
+      "Read(//Users/marcusfelix/Projects/bliss/**)",
+      "Bash(ls:*)"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "gid://shopify/Page/1",
+  "handle": "about-us",
+  "title": "About Us",
+  "body": "<h1>About Us</h1><p>We love the outdoors.</p>",
+  "bodySummary": "We love the outdoors.",
+  "seo": { "title": "About Us", "description": "Learn about our company" },
+  "createdAt": "2024-01-01T00:00:00Z",
+  "updatedAt": "2024-01-01T00:00:00Z"
+}

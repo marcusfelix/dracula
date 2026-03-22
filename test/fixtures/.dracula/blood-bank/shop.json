@@ -1,0 +1,19 @@
+{
+  "id": "gid://shopify/Shop/1",
+  "name": "Test Outdoor Store",
+  "description": "Premium outdoor gear",
+  "primaryDomain": {
+    "url": "https://test-outdoor.myshopify.com",
+    "host": "test-outdoor.myshopify.com"
+  },
+  "brand": null,
+  "paymentSettings": {
+    "currencyCode": "USD",
+    "acceptedCardBrands": ["VISA", "MASTERCARD"],
+    "enabledPresentmentCurrencies": ["USD", "EUR"]
+  },
+  "privacyPolicy": null,
+  "refundPolicy": null,
+  "shippingPolicy": null,
+  "termsOfService": null
+}
