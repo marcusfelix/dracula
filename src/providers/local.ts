@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import type { DraculaConfig } from "../config.js";
 import {
@@ -102,12 +102,22 @@ function sortItems<T>(
   return reverse ? sorted.reverse() : sorted;
 }
 
+const STRUCTURED_FILTER_PATTERN = /\b\w+:[^\s]/;
+
 function filterByQuery<T>(
   items: T[],
   query: string | undefined,
   getSearchableText: (item: T) => string
 ): T[] {
   if (!query) return items;
+
+  if (STRUCTURED_FILTER_PATTERN.test(query)) {
+    console.warn(
+      `[Dracula] Warning: LocalProvider does not support structured Shopify filter syntax (received "${query}"). ` +
+      `Filters like "product_type:Apparel" or "tag:sale" are not parsed — the query is matched as plain keywords. ` +
+      `Results may differ from production. See: https://github.com/marcusfelix/dracula#local-provider-limitations`
+    );
+  }
 
   const terms = query
     .split(/\s+/)
@@ -154,6 +164,7 @@ export class LocalProvider implements DraculaProvider {
 
     this.loadData();
     this.logCartState();
+    this.checkSnapshotAge(config);
 
     this.products = this.createProductsNamespace();
     this.collections = this.createCollectionsNamespace();
@@ -181,6 +192,20 @@ export class LocalProvider implements DraculaProvider {
       console.log(
         `[Dracula] Cart loaded: ${totalLines} line item${totalLines === 1 ? "" : "s"}. ` +
         `Run \`npx dracula reset cart\` to clear.`
+  private checkSnapshotAge(config: DraculaConfig): void {
+    const maxAgeDays = config.localProvider?.maxSnapshotAge ?? 7;
+    if (maxAgeDays === 0) return;
+
+    const shopPath = join(this.dataDir, "shop.json");
+    if (!existsSync(shopPath)) return;
+
+    const mtime = statSync(shopPath).mtime;
+    const ageDays = Math.floor((Date.now() - mtime.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (ageDays >= maxAgeDays) {
+      console.warn(
+        `[Dracula] Warning: blood-bank snapshot is ${ageDays} day${ageDays === 1 ? "" : "s"} old. ` +
+        `Run \`npx dracula siphon\` to refresh.`
       );
     }
   }

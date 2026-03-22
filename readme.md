@@ -276,6 +276,23 @@ try {
     └────────┘  └──────────────┘
 ```
 
+## Local Provider Limitations
+
+The `LocalProvider` simulates most Shopify Storefront API behavior, but there are known differences:
+
+**Query filter syntax is not supported.** The `query` parameter on `products.list()`, `collections.list()`, and `search.search()` performs simple keyword matching — it splits the query into words and checks if all words appear in the item's searchable text (title, description, tags, vendor, product type). Shopify's structured filter syntax (`product_type:Apparel`, `tag:sale`, `available_for_sale:true`, `price:>50`) is **not parsed**. If you pass a structured filter string, a console warning will be emitted and the query will be matched as plain text, which may return incorrect results.
+
+**Supported locally:**
+- Keyword search across product text fields
+- `sortKey` + `reverse` ordering (TITLE, PRICE, CREATED_AT, UPDATED_AT, VENDOR, PRODUCT_TYPE, ID)
+- `first`/`after` cursor pagination
+- Cart mutations with JSON persistence
+
+**Not supported locally (works in production via RemoteProvider):**
+- Structured filter strings (`product_type:X`, `tag:X`, `price:>N`, boolean filters)
+- `BEST_SELLING` and `RELEVANCE` sort keys (falls back to title sort)
+- Discount code validation (codes are always marked as applicable)
+
 ## License
 
 MIT

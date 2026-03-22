@@ -9,6 +9,7 @@ export interface DraculaSiphonConfig {
 export interface DraculaLocalProviderConfig {
   artificialDelay?: number;
   strictMode?: boolean;
+  maxSnapshotAge?: number;
 }
 
 export interface DraculaConfig {
