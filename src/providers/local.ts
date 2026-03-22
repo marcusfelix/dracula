@@ -102,12 +102,22 @@ function sortItems<T>(
   return reverse ? sorted.reverse() : sorted;
 }
 
+const STRUCTURED_FILTER_PATTERN = /\b\w+:[^\s]/;
+
 function filterByQuery<T>(
   items: T[],
   query: string | undefined,
   getSearchableText: (item: T) => string
 ): T[] {
   if (!query) return items;
+
+  if (STRUCTURED_FILTER_PATTERN.test(query)) {
+    console.warn(
+      `[Dracula] Warning: LocalProvider does not support structured Shopify filter syntax (received "${query}"). ` +
+      `Filters like "product_type:Apparel" or "tag:sale" are not parsed — the query is matched as plain keywords. ` +
+      `Results may differ from production. See: https://github.com/marcusfelix/dracula#local-provider-limitations`
+    );
+  }
 
   const terms = query
     .split(/\s+/)
