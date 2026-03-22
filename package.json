@@ -47,7 +47,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@shopify/storefront-api-client": "^1.0.0"
+    "@shopify/storefront-api-client": "^1.0.0",
+    "jiti": "^2.6.1"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

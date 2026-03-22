@@ -5,7 +5,6 @@ import {
   existsSync,
   readFileSync,
 } from "node:fs";
-import { pathToFileURL } from "node:url";
 
 const API_VERSION = "2025-04";
 
@@ -281,30 +280,46 @@ function writeIndex(
 
 // ─── Config Loader ───────────────────────────────────────────────────────────
 
+function loadEnvFile(filePath: string): void {
+  if (!existsSync(filePath)) return;
+  const contents = readFileSync(filePath, "utf-8");
+  for (const line of contents.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eq = trimmed.indexOf("=");
+    if (eq === -1) continue;
+    const key = trimmed.slice(0, eq).trim();
+    const val = trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+    if (!(key in process.env)) process.env[key] = val;
+  }
+}
+
 async function loadConfig(): Promise<SiphonConfig> {
+  // Load .env files so env vars are available inside dracula.config.ts
+  loadEnvFile(resolve(".env.local"));
+  loadEnvFile(resolve(".env"));
+
   const configPath = resolve("dracula.config.ts");
   const configPathJs = resolve("dracula.config.js");
 
-  let configFile: string;
-
-  if (existsSync(configPath)) {
-    configFile = configPath;
-  } else if (existsSync(configPathJs)) {
-    configFile = configPathJs;
-  } else {
-    // Try env vars as fallback
-    const shop = process.env.SHOPIFY_STORE_DOMAIN;
-    const token = process.env.SHOPIFY_STOREFRONT_TOKEN;
-    if (shop && token) {
-      return { shop, storefrontAccessToken: token };
-    }
-    throw new Error(
-      "No dracula.config.ts or dracula.config.js found. Set SHOPIFY_STORE_DOMAIN and SHOPIFY_STOREFRONT_TOKEN env vars as fallback."
-    );
+  if (existsSync(configPath) || existsSync(configPathJs)) {
+    const configFile = existsSync(configPath) ? configPath : configPathJs;
+    const { createJiti } = await import("jiti");
+    const jiti = createJiti(import.meta.url);
+    const mod = await jiti.import(configFile);
+    return (mod as { default: SiphonConfig }).default;
   }
 
-  const mod = await import(pathToFileURL(configFile).href);
-  return mod.default as SiphonConfig;
+  // Fallback to env vars
+  const shop = process.env.SHOPIFY_STORE_DOMAIN;
+  const token = process.env.SHOPIFY_STOREFRONT_TOKEN;
+  if (shop && token) {
+    return { shop, storefrontAccessToken: token };
+  }
+
+  throw new Error(
+    "No dracula.config.ts found. Create one or set SHOPIFY_STORE_DOMAIN and SHOPIFY_STOREFRONT_TOKEN env vars."
+  );
 }
 
 // ─── Siphon Command ─────────────────────────────────────────────────────────
